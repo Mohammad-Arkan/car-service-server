@@ -27,6 +27,7 @@ async function run() {
     await client.connect();
 
     const serviceCollection = client.db('CarCarCar').collection('service');
+    const bookingCollection = client.db('CarCarCar').collection('bookings');
 
     app.get('/service', async(req, res)=> {
       const cursor = serviceCollection.find()
@@ -45,6 +46,15 @@ async function run() {
 
       const result = await serviceCollection.findOne(query, options)
       res.send(result)
+    })
+
+    //booking
+    app.post('/bookings', async(req, res)=> {
+      const booking = req.body;
+      console.log(booking)
+      const result = await bookingCollection.insertOne(booking);
+      res.send(result)
+
     })
 
     // Send a ping to confirm a successful connection
